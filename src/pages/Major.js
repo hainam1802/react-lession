@@ -6,12 +6,14 @@ import Input from "../components/Input";
 import { toast } from "react-toastify";
 import {useFormik} from "formik";
 import * as Yup from "yup"
+import CustomButton from "../components/CustomButton";
 
 // const defaultMajor = { id: 0, name: "" };
 
 const Major = (props) => {
   const [majors, setMajors] = useState([]); //quan ly danh sach major
   const [selectedId, setSelectedId] = useState(0); //bien để gán id cho chức năng xóa
+  const [isWaiting, setIsWaiting] = useState(false)
   // const [major, setMajor] = useState(defaultMajor); // quan ly 1 doi tuong major
   // const navigate = useNavigate();
   const formilk = useFormik({
@@ -24,6 +26,7 @@ const Major = (props) => {
       name: Yup.string().required("Vui lòng nhập tên").min(2,"Kí tự phải từ 2 trở lên")
     }),
     onSubmit:((values) => {
+        setIsWaiting(true);
         handleSave(values)
     })
   })
@@ -61,9 +64,13 @@ const Major = (props) => {
   // };
 
   const handleSave = (data) => {
+
+
     if (data.id === 0) {
+
       //neu major.id === 0 thi them moi
       majorService.add(data).then((res) => {
+        setIsWaiting(false)
         if (res.errorCode === 0) {
           loadData();
           handleClose();
@@ -75,6 +82,7 @@ const Major = (props) => {
     } else {
       // nguoc lai thi update
       majorService.update(data.id, data).then((res) => {
+        setIsWaiting(false)
         if (res.errorCode === 0) {
           loadData();
           handleClose();
@@ -211,9 +219,9 @@ const Major = (props) => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" disabled={!formilk.dirty || !formilk.isValid} onClick={formilk.handleSubmit}>
-              Save
-            </Button>
+            <CustomButton color="primary"  onClick={formilk.handleSubmit} isLoading={isWaiting} disabled={!formilk.dirty || !formilk.isValid || isWaiting} >
+              Lưu
+            </CustomButton>
           </Modal.Footer>
         </Modal>
 

@@ -1,26 +1,26 @@
 import api from "./api";
 
 const list = () => {
-  return api.get(api.url.student)
+  return api.get(api.url.students)
 };
 
 const get = (id) => {
-  return api.get(`${api.url.student}/${id}`)
+  return api.get(`${api.url.students}/${id}`)
 };
 
 const add = (data) => {
-  return api.post(api.url.student, data)
+  return api.post(api.url.students, data)
 };
 
 const update = (id, data) => {
-  return api.put(`${api.url.student}/${id}`, data)
+  return api.put(`${api.url.students}/${id}`, data)
 };
 
 const remove = (id) => {
-  return api.delete(`${api.url.student}/${id}`)
+  return api.delete(`${api.url.students}/${id}`)
 };
 
-const studentService = {
+const studentsService = {
   list,
   get,
   add,
@@ -28,4 +28,4 @@ const studentService = {
   delete: remove,
 };
 
-export default studentService;
+export default studentsService;

@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 const Input = (props) => {
   const { inputRef, id, label, labelSize,lastRow,frmField ,errMessage, ...others} = props;
 
@@ -37,5 +37,11 @@ const Input = (props) => {
     </>
   );
 };
+Input.prototype = {
+  type: PropTypes.oneOf(["text","password","email"]),
+  inputRef: PropTypes.object,
+  id: PropTypes.oneOf([PropTypes.string,PropTypes.number]),
+  label: PropTypes.string.isRequired,
 
+}
 export default Input;

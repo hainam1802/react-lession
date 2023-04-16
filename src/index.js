@@ -14,12 +14,16 @@ import { ToastContainer } from "react-toastify";
 import {Provider} from "react-redux";
 import store, {persistStore1} from "./store/reducers";
 import {PersistGate} from "redux-persist/integration/react";
+import LoadingBar from "react-redux-loading-bar";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={store} >
         <PersistGate loading={null} persistor={persistStore1}>
             <BrowserRouter>
+                <div className="fixed-top w-100" style={{zIdex: 100}}>
+                    <LoadingBar updateTime={100} claseName="bg-danger" style={{height: '2px'}} />
+                </div>
                 <ToastContainer theme="colored"/>
                 <App />
             </BrowserRouter>

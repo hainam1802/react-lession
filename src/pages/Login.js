@@ -1,25 +1,29 @@
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./Login.css";
 import Input from "./../components/Input";
 import { useNavigate } from "react-router-dom";
 import userService from "../services/userService";
 import {useDispatch} from "react-redux";
 import {login} from "../store/auth";
+import CustomButton from "../components/CustomButton";
 
 const Login = (props) => {
   const [message, setMessage] = useState(""); // state
+  const [isWaiting, setIsWaiting] = useState(false); // state
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const usernameRef = useRef(); //tạo ra Ref gán vào usernameref
   const passwordRef = useRef(); //tạo ra Ref gán vào passwordref
+
 
   const submitHandler = (e) => {
     e.preventDefault(); // ngăn chặn refesh khi submit mặc định trên form, thẻ a > di chuyển trang;
     const username = usernameRef.current.value; //this.usernameRef.current tương đương vs document.getElementById(username)
     const password = passwordRef.current.value;
     // console.log(username, password);
-
+    setIsWaiting(true)
     userService.login(username, password).then((res) => {
+      setIsWaiting(false)
       if (res.errorCode === 0) {
         setMessage("");
         dispatch(login({
@@ -81,9 +85,9 @@ const Login = (props) => {
 
                   <div className="row">
                     <div className="offset-sm-3 col-auto">
-                      <button type="submit" className="btn btn-danger">
-                        Sign in
-                      </button>
+                      <CustomButton type="submit" color="primary" isLoading={isWaiting} disabled={isWaiting} >
+                        Sign dsd
+                      </CustomButton>
                     </div>
                   </div>
                 </form>
